@@ -1,5 +1,12 @@
 import MarkdownIt from 'markdown-it'
 
+function _interopDefault (ex) {
+  if (ex && typeof ex === 'object' && 'default' in ex) {
+    return ex['default']
+  }
+  return ex
+}
+
 export default ({ app }, inject) => {
 <%
 const plugins = options.use || []
@@ -14,7 +21,7 @@ options = options === '{}' ? undefined : options
     const plugin = hasOpts ? config.shift(): config
     const opts = hasOpts ? config : []
 %>
-  md.use(require('<%= plugin %>')<% for(opt of opts) { %>, <%= serialize(opt) %> <% } %>)
+  md.use(_interopDefault(require('<%= plugin %>'))<% for(opt of opts) { %>, <%= serialize(opt) %> <% } %>)
 <% } %>
   inject('md', md)
 }
